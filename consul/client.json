@@ -1,0 +1,12 @@
+{
+    "server": false,
+    "datacenter": "saintcon",
+    "data_dir": "/var/consul",
+    "encrypt": "4NY7Dfrv1AExUO1XsTnYJqlr2tIZabJ8vbdBxS6WSsY=",
+    "log_level": "INFO",
+    "enable_syslog": true,
+    "leave_on_terminate": true,
+    "retry_join": [
+        "consul.service.consul"
+    ]
+}

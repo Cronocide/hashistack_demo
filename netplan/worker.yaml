@@ -1,0 +1,18 @@
+# Netplan for a worker that relies on Consul
+# Netplan only supports globbing, not regex, so we have to have multiple directives to
+# match for multiple interfaces.
+network:
+  version: 2
+  ethernets:
+    # Match the primary interface (should be en*18)
+    primary-interface:
+      match:
+         name: en*18
+      dhcp4: true
+      dhcp-identifier: mac
+      dhcp4-overrides:
+        use-dns: no
+        route-metric: 10
+    # Use our shared consul IP as the nameserver
+      nameservers:
+        addresses: [10.10.64.254]

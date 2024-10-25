@@ -1,0 +1,29 @@
+[Unit]
+Description=Vault Secure Secrets Manager
+After=syslog.target network-online.target
+
+[Service]
+Type=simple
+User=vault
+Group=vault
+SecureBits=keep-caps
+AmbientCapabilities=CAP_IPC_LOCK
+#Capabilities=CAP_IPC_LOCK+ep
+CapabilityBoundingSet=CAP_SYSLOG CAP_IPC_LOCK
+ExecStart=/usr/bin/vault server -config=/etc/vault.d/vault.hcl
+Environment="VAULT_CACERT=/opt/vault/tls/tls.pem"
+ExecReload=/bin/kill --signal HUP $MAINPID
+KillMode=process
+KillSignal=SIGINT
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=30
+LimitNOFILE=65536
+LimitMEMLOCK=infinity
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=full
+ProtectHome=read-only
+
+[Install]
+WantedBy=multi-user.target

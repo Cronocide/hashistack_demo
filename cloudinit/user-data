@@ -1,0 +1,63 @@
+#cloud-config
+autoinstall:
+  version: 1
+  locale: en_US
+  # Check for an updated Ubuntu installer
+  refresh-installer:
+    update: yes
+  # User setup information. We'll set up a user for Packer, who will set up the rest of the system.
+  user-data:
+    timezone: America/Denver
+    users:
+      - name: packer
+        plain_text_passwd: packer
+        groups: [sudo]
+        sudo: ALL=(ALL) NOPASSWD:ALL
+        shell: /bin/bash
+        lock-passwd: false
+  ssh:
+    allow-pw: true
+    # Install the SSH server that Packer will use after installation to continue provisioning the host.
+    install-server: true
+  # Since the host is a VM, we don't need to use LVM.
+  storage:
+    layout:
+      name: direct
+      grub_device: true
+  # Remove the sudo password requirement for the setup user.
+  late-commands:
+    # Remove the sudo password requirement for the setup user.
+    - echo 'packer ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/packer
+    # Update available packages
+    - apt-get update
+  # Upgrade packages before installing.
+  package_upgrade: true
+  # Packages to fetch and install with the OS.
+  # Virtualization guest libraries are helpful for compatibility.
+  packages:
+  - apt-transport-https
+  - qemu-guest-agent
+  - open-vm-tools
+  - virtualbox-guest-additions-iso
+  # Resize the installation volume to it's full size.
+  resize_rootfs: True
+  growpart:
+    mode: auto
+    devices: ["/"]
+    ignore_growroot_disabled: false
+  disable_network_activation: true
+# Xmission provides apt mirrors that we are grateful for and use here.
+  apt:
+    mirror-selection:
+      primary:
+        - country-mirror
+        - arches: [default]
+          uri: "http://mirrors.xmission.com/ubuntu"
+    search_dns: True
+    geoip: true
+
+# Commands to run immediately.
+# We turn off SSH until install has completed so that packer
+# can work with a fully-bootstrapped system.
+runcmd:
+  - "service ssh stop"

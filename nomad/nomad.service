@@ -1,0 +1,13 @@
+[Unit]
+Description=Nomad Workload Orchestration
+After=syslog.target network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/nomad agent -config=/etc/nomad.d
+Restart=on-failure
+RestartSec=3
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target

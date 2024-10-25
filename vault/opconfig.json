@@ -1,0 +1,4 @@
+{
+	"op_connect_host": "http://1password-connect.service.consul:8482",
+	"op_connect_token": ""
+}

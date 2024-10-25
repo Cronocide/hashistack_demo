@@ -1,0 +1,14 @@
+[Unit]
+Description=automatically unseal Vault
+After=vault.service
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/default/vault
+ExecStart=/usr/bin/vault operator unseal $UNSEAL_KEY
+Restart=on-failure
+RestartSec=10
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target

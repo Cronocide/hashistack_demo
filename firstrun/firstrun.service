@@ -1,0 +1,16 @@
+# /etc/systemd/system/firstrun.service
+# This is a systemd job that runs a firstrun.sh on the first boot of the machine
+# to do instance-specific configurations not available to the provisioner.
+# firstrun.sh is responsible for managing it's own lifecycle, this job just
+# runs it at reboot.
+
+[Unit]
+Description=Runs during the first boot of a machine configured by Packer.
+
+[Service]
+ExecStart=/opt/firstrun.sh
+Type=oneshot
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
