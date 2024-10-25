@@ -17,7 +17,7 @@ packer init packerfiles/{proxmox,virtualbox}.pkr.hcl
 
 _(For proxmox or virtualbox builds)_.
 
-![Running Packer](https://asciinema.org/a/jxdC4Tut7aVehT83AA03N9wrf/iframe?loop=true&speed=8&theme=asciinema&rows=37)
+[![Running Packer](https://asciinema.org/a/jxdC4Tut7aVehT83AA03N9wrf.svg)](https://asciinema.org/a/jxdC4Tut7aVehT83AA03N9wrf/iframe?loop=true&speed=8&theme=asciinema&rows=37&autoplay=1)
 
 
 ### Platform
