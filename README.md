@@ -5,7 +5,7 @@
 
 Demo code for the presentation on Packer, Consul, Nomad, and Vault.
 
-[Slides](https://slides.com/d/RpyEEDY)
+[Slides](https://slides.com/cronocide/luyhwk)
 
 ---
 
